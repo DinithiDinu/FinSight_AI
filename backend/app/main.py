@@ -9,6 +9,10 @@ from app.routes.transaction_routes import (
     router as transaction_router
 )
 
+from app.routes.budget_routes import (
+    router as budget_router
+)
+
 app = FastAPI()
 
 # ALLOW FRONTEND
@@ -35,6 +39,12 @@ app.include_router(
     transaction_router,
     prefix="/transactions",
     tags=["Transactions"]
+)
+
+app.include_router(
+    budget_router,
+    prefix="/budgets",
+    tags=["Budgets"]
 )
 
 @app.get("/")
