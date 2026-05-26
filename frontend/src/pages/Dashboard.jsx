@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 
 import {
+  
   PieChart,
   Pie,
   Cell,
   Tooltip,
   ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
 } from "recharts";
 
 function Dashboard() {
@@ -74,6 +80,88 @@ function Dashboard() {
     name: key,
     value: value,
   }));
+
+  // Monthly Expense trends
+  const monthlyData = {};
+
+  transactions.forEach((t) => {
+
+    if (t.type === "expense") {
+
+      const month = new Date(t.date)
+      .toLocaleString("default", {
+        month: "short",
+      });
+
+      if (!monthlyData[month]) {
+      monthlyData[month] = 0;
+    }
+
+    monthlyData[month] += t.amount;
+  }
+});
+
+const trendData = Object.entries(
+  monthlyData
+).map(([month, amount]) => ({
+  month,
+  amount,
+}));
+
+// AI INSIGHTS
+const insights = [];
+
+// Highest expense category
+if (chartData.length > 0) {
+
+  const highestCategory = chartData.reduce(
+    (max, current) =>
+      current.value > max.value
+        ? current
+        : max
+  );
+
+  insights.push(
+    `💡 Highest spending category: ${highestCategory.name}`
+  );
+}
+
+// Spending trend
+if (trendData.length >= 2) {
+
+  const latest =
+    trendData[trendData.length - 1].amount;
+
+  const previous =
+    trendData[trendData.length - 2].amount;
+
+  if (latest > previous) {
+
+    insights.push(
+      "📈 Your expenses increased recently"
+    );
+
+  } else {
+
+    insights.push(
+      "✅ Your expenses are decreasing"
+    );
+  }
+}
+
+// Balance insight
+if (balance > 0) {
+
+  insights.push(
+    "💰 Your income exceeds expenses"
+  );
+
+} else {
+
+  insights.push(
+    "⚠️ Your expenses exceed income"
+  );
+}
 
   const COLORS = [
     "#3B82F6",
@@ -178,6 +266,77 @@ function Dashboard() {
               </PieChart>
 
             </ResponsiveContainer>
+
+            {/* MONTHLY TREND CHART */}
+<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+
+  <h2 className="text-2xl font-bold mb-6">
+    Monthly Expense Trends
+  </h2>
+
+  {trendData.length === 0 ? (
+
+    <p>No trend data available.</p>
+
+  ) : (
+
+    <div style={{ width: "100%", height: 400 }}>
+
+      <ResponsiveContainer>
+
+        <LineChart data={trendData}>
+
+          <CartesianGrid strokeDasharray="3 3" />
+
+          <XAxis dataKey="month" />
+
+          <YAxis />
+
+          <Tooltip />
+
+          <Line
+            type="monotone"
+            dataKey="amount"
+            stroke="#3B82F6"
+            strokeWidth={3}
+          />
+
+        </LineChart>
+
+      </ResponsiveContainer>
+
+      {/* AI INSIGHTS */}
+<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+
+  <h2 className="text-2xl font-bold mb-6">
+    AI Financial Insights
+  </h2>
+
+  <div className="space-y-4">
+
+    {insights.map((insight, index) => (
+
+      <div
+        key={index}
+        className="bg-gray-800 p-4 rounded-lg"
+      >
+
+        <p>{insight}</p>
+
+      </div>
+
+    ))}
+
+  </div>
+
+</div>
+
+    </div>
+    
+
+  )}
+
+</div>
 
           </div>
 
