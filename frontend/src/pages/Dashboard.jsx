@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import API from "../services/api";
 
-import {
-  
+import BudgetForm from "../components/BudgetForm";
+
+import { 
   PieChart,
   Pie,
   Cell,
@@ -19,6 +20,9 @@ import {
 function Dashboard() {
 
   const [transactions, setTransactions] =
+    useState([]);
+
+  const [budgets, setBudgets] =
     useState([]);
 
   const fetchTransactions = async () => {
@@ -37,9 +41,26 @@ function Dashboard() {
     }
   };
 
+  const fetchBudgets = async () => {
+
+  try {
+
+    const response = await API.get(
+      "/budgets"
+    );
+
+    setBudgets(response.data);
+
+  } catch (error) {
+
+    console.error(error);
+  }
+};
+
   useEffect(() => {
 
     fetchTransactions();
+    fetchBudgets();
 
   }, []);
 
@@ -163,6 +184,45 @@ if (balance > 0) {
   );
 }
 
+// BUDGET ALERTS
+const budgetAlerts = [];
+
+budgets.forEach((budget) => {
+
+  const spent = transactions
+    .filter(
+      (t) =>
+        t.type === "expense" &&
+        t.category === budget.category
+    )
+    .reduce(
+      (acc, curr) =>
+        acc + curr.amount,
+      0
+    );
+
+  if (spent > budget.limit_amount) {
+
+    budgetAlerts.push(
+      `⚠️ ${budget.category} budget exceeded`
+    );
+
+  } else if (
+    spent > budget.limit_amount * 0.8
+  ) {
+
+    budgetAlerts.push(
+      `⚠️ ${budget.category} spending close to limit`
+    );
+
+  } else {
+
+    budgetAlerts.push(
+      `✅ ${budget.category} within budget`
+    );
+  }
+});
+
   const COLORS = [
     "#3B82F6",
     "#EF4444",
@@ -177,6 +237,10 @@ if (balance > 0) {
       <h1 className="text-4xl font-bold mb-8">
         Financial Dashboard
       </h1>
+
+      <BudgetForm
+        fetchBudgets={fetchBudgets}
+      />
 
       {/* SUMMARY CARDS */}
       <div className="grid grid-cols-3 gap-6 mb-8">
@@ -330,6 +394,41 @@ if (balance > 0) {
   </div>
 
 </div>
+
+{/* BUDGET ALERTS */}
+<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+
+  <h2 className="text-2xl font-bold mb-6">
+    Budget Monitoring
+  </h2>
+
+  <div className="space-y-4">
+
+    {budgetAlerts.length === 0 ? (
+
+      <p>No budgets configured.</p>
+
+    ) : (
+
+      budgetAlerts.map((alert, index) => (
+
+        <div
+          key={index}
+          className="bg-gray-800 p-4 rounded-lg"
+        >
+
+          <p>{alert}</p>
+
+        </div>
+
+      ))
+
+    )}
+
+  </div>
+
+</div>
+
 
     </div>
     
