@@ -1,4 +1,38 @@
+import { useEffect, useState } from "react";
+
+import API from "../services/api";
+
+import TransactionForm from "../components/TransactionForm";
+
+import TransactionList from "../components/TransactionList";
+
 function Transactions() {
+
+  const [transactions, setTransactions] =
+    useState([]);
+
+  const fetchTransactions = async () => {
+
+    try {
+
+      const response = await API.get(
+        "/transactions"
+      );
+
+      setTransactions(response.data);
+
+    } catch (error) {
+
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchTransactions();
+
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-950 text-white p-8">
 
@@ -6,11 +40,13 @@ function Transactions() {
         Transactions
       </h1>
 
-      <div className="bg-gray-900 p-6 rounded-2xl">
+      <TransactionForm
+        fetchTransactions={fetchTransactions}
+      />
 
-        <p>No transactions yet.</p>
-
-      </div>
+      <TransactionList
+        transactions={transactions}
+      />
 
     </div>
   );
