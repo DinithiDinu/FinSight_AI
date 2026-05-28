@@ -1,25 +1,38 @@
-import { Link, useLocation } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Receipt,
+  LogOut,
+} from "lucide-react";
+
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 function Sidebar() {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
-    {
-      name: "Dashboard",
-      path: "/dashboard",
-    },
-    {
-      name: "Transactions",
-      path: "/transactions",
-    },
-  ];
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    name: "Transactions",
+    path: "/transactions",
+    icon: Receipt,
+  },
+];
 
   const handleLogout = () => {
 
     localStorage.removeItem("token");
 
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -41,7 +54,11 @@ function Sidebar() {
       {/* NAVIGATION */}
       <div className="space-y-3">
 
-        {navItems.map((item) => (
+        {navItems.map((item) => {
+          
+          const Icon = item.icon;
+
+          return (
 
           <Link
             key={item.path}
@@ -55,10 +72,16 @@ function Sidebar() {
               }
             `}
           >
-            {item.name}
-          </Link>
+             <div className="flex items-center gap-3">
 
-        ))}
+             <Icon size={20} />
+
+             <span>{item.name}</span>
+
+             </div>
+          </Link>
+        
+        )})}
 
       </div>
 
@@ -69,7 +92,13 @@ function Sidebar() {
           onClick={handleLogout}
           className="w-full bg-rose-500 hover:bg-rose-600 text-white p-4 rounded-2xl transition-all duration-200"
         >
-          Logout
+          <div className="flex items-center justify-center gap-2">
+
+          <LogOut size={18} />
+
+          <span>Logout</span>
+
+          </div>
         </button>
 
       </div>
