@@ -8,6 +8,8 @@ import TransactionList from "../components/TransactionList";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 
+import PageWrapper from "../components/PageWrapper";
+
 function Transactions() {
 
   const [transactions, setTransactions] =
@@ -37,6 +39,7 @@ function Transactions() {
 
   return (
     <DashboardLayout>
+      <PageWrapper>
     <div className="min-h-screen bg-gray-950 text-slate-800 p-8">
 
       <h1 className="text-4xl font-bold mb-8">
@@ -52,6 +55,7 @@ function Transactions() {
       />
 
     </div>
+    </PageWrapper>
     </DashboardLayout>
   );
 }
