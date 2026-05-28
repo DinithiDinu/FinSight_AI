@@ -4,6 +4,8 @@ import API from "../services/api";
 
 import BudgetForm from "../components/BudgetForm";
 
+import DashboardLayout from "../layouts/DashboardLayout";
+
 import { 
   PieChart,
   Pie,
@@ -232,6 +234,7 @@ budgets.forEach((budget) => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-slate-100 text-slate-800 p-8">
 
       <div className="mb-8">
@@ -452,6 +455,7 @@ budgets.forEach((budget) => {
       </div>
 
     </div>
+    </DashboardLayout>
   );
 }
 
