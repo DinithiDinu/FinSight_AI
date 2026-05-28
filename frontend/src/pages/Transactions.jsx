@@ -6,6 +6,8 @@ import TransactionForm from "../components/TransactionForm";
 
 import TransactionList from "../components/TransactionList";
 
+import DashboardLayout from "../layouts/DashboardLayout";
+
 function Transactions() {
 
   const [transactions, setTransactions] =
@@ -34,6 +36,7 @@ function Transactions() {
   }, []);
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gray-950 text-slate-800 p-8">
 
       <h1 className="text-4xl font-bold mb-8">
@@ -49,6 +52,7 @@ function Transactions() {
       />
 
     </div>
+    </DashboardLayout>
   );
 }
 
