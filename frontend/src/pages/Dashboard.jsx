@@ -232,34 +232,42 @@ budgets.forEach((budget) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-8">
+    <div className="min-h-screen bg-slate-100 text-slate-800 p-8">
 
-      <h1 className="text-4xl font-bold mb-8">
-        Financial Dashboard
-      </h1>
+      <div className="mb-8">
+
+  <h1 className="text-5xl font-bold tracking-tight">
+    FinSight AI
+  </h1>
+
+  <p className="text-slate-500 mt-2 text-lg">
+    Smart personal finance analytics
+  </p>
+
+</div>
 
       <BudgetForm
         fetchBudgets={fetchBudgets}
       />
 
       {/* SUMMARY CARDS */}
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid md:grid-cols-3 gap-6 mb-8">
 
-        <div className="bg-gray-900 p-6 rounded-2xl">
+        <div className="bg-white p-6 rounded-2xl">
 
-          <h2 className="text-gray-400">
+          <h2 className="text-slate-500">
             Total Balance
           </h2>
 
-          <p className="text-3xl font-bold mt-2">
+          <p className="text-4xl font-bold mt-3 tracking-tight">
             Rs. {balance}
           </p>
 
         </div>
 
-        <div className="bg-gray-900 p-6 rounded-2xl">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
 
-          <h2 className="text-gray-400">
+          <h2 className="text-slate-500">
             Total Income
           </h2>
 
@@ -269,9 +277,9 @@ budgets.forEach((budget) => {
 
         </div>
 
-        <div className="bg-gray-900 p-6 rounded-2xl">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
 
-          <h2 className="text-gray-400">
+          <h2 className="text-slate-500">
             Total Expenses
           </h2>
 
@@ -284,7 +292,7 @@ budgets.forEach((budget) => {
       </div>
 
       {/* CHART */}
-      <div className="bg-gray-900 p-6 rounded-2xl">
+      <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
 
         <h2 className="text-2xl font-bold mb-6">
           Expense Categories
@@ -332,7 +340,7 @@ budgets.forEach((budget) => {
             </ResponsiveContainer>
 
             {/* MONTHLY TREND CHART */}
-<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+<div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 mt-8">
 
   <h2 className="text-2xl font-bold mb-6">
     Monthly Expense Trends
@@ -370,7 +378,7 @@ budgets.forEach((budget) => {
       </ResponsiveContainer>
 
       {/* AI INSIGHTS */}
-<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+<div className="bg-white p-6 rounded-2xl mt-8">
 
   <h2 className="text-2xl font-bold mb-6">
     AI Financial Insights
@@ -382,7 +390,7 @@ budgets.forEach((budget) => {
 
       <div
         key={index}
-        className="bg-gray-800 p-4 rounded-lg"
+        className="bg-slate-50 p-4 rounded-lg"
       >
 
         <p>{insight}</p>
@@ -396,7 +404,7 @@ budgets.forEach((budget) => {
 </div>
 
 {/* BUDGET ALERTS */}
-<div className="bg-gray-900 p-6 rounded-2xl mt-8">
+<div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 mt-8">
 
   <h2 className="text-2xl font-bold mb-6">
     Budget Monitoring
@@ -414,7 +422,7 @@ budgets.forEach((budget) => {
 
         <div
           key={index}
-          className="bg-gray-800 p-4 rounded-lg"
+          className="bg-slate-50 p-4 rounded-lg"
         >
 
           <p>{alert}</p>
