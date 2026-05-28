@@ -42,9 +42,9 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-slate-800">
 
-      <div className="bg-gray-900 p-8 rounded-2xl shadow-lg w-96">
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
 
         <h1 className="text-3xl font-bold mb-6 text-center">
           Create Account
@@ -61,7 +61,7 @@ function Register() {
             placeholder="Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+            className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
           />
 
           <input
@@ -70,7 +70,7 @@ function Register() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+            className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
           />
 
           <input
@@ -79,7 +79,7 @@ function Register() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+            className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
           />
 
           <button

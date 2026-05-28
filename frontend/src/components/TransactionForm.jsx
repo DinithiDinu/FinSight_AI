@@ -49,7 +49,7 @@ function TransactionForm({ fetchTransactions }) {
   };
 
   return (
-    <div className="bg-gray-900 p-6 rounded-2xl">
+    <div className="bg-white p-6 rounded-2xl">
 
       <h2 className="text-2xl font-bold mb-4">
         Add Transaction
@@ -66,14 +66,14 @@ function TransactionForm({ fetchTransactions }) {
           placeholder="Amount"
           value={formData.amount}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <select
           name="type"
           value={formData.type}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         >
           <option value="expense">
             Expense
@@ -90,7 +90,7 @@ function TransactionForm({ fetchTransactions }) {
           placeholder="Category"
           value={formData.category}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <input
@@ -99,7 +99,7 @@ function TransactionForm({ fetchTransactions }) {
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <input
@@ -107,7 +107,7 @@ function TransactionForm({ fetchTransactions }) {
           name="date"
           value={formData.date}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <button

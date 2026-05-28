@@ -45,7 +45,7 @@ function BudgetForm({ fetchBudgets }) {
   };
 
   return (
-    <div className="bg-gray-900 p-6 rounded-2xl">
+    <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
 
       <h2 className="text-2xl font-bold mb-4">
         Set Budget
@@ -62,7 +62,7 @@ function BudgetForm({ fetchBudgets }) {
           placeholder="Category"
           value={formData.category}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <input
@@ -71,7 +71,7 @@ function BudgetForm({ fetchBudgets }) {
           placeholder="Budget Limit"
           value={formData.limit_amount}
           onChange={handleChange}
-          className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700"
+          className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200"
         />
 
         <button
