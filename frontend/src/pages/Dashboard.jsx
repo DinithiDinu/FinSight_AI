@@ -8,6 +8,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 
 import PageWrapper from "../components/PageWrapper";
 
+import AIAssistant from "../components/AIAssistant";
+
 import { 
   PieChart,
   Pie,
@@ -458,6 +460,11 @@ budgets.forEach((budget) => {
       </div>
 
     </div>
+
+    <AIAssistant
+      insights={insights}
+     />
+
     </PageWrapper>
     </DashboardLayout>
   );

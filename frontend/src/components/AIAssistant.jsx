@@ -10,20 +10,20 @@ function AIAssistant({
   return (
     <div className="fixed bottom-6 right-6 w-96 z-50">
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-sm border border-slate-200/80 rounded-3xl shadow-2xl overflow-hidden">
 
-        {/* HEADER */}
-        <div className="bg-blue-600 text-white p-4 flex items-center gap-3">
+        {/* HEADER - Modern gradient */}
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 flex items-center gap-3">
 
-          <Bot size={24} />
+          <Bot size={24} className="drop-shadow-sm" />
 
           <div>
 
-            <h2 className="font-bold">
+            <h2 className="font-bold tracking-tight">
               FinSight AI
             </h2>
 
-            <p className="text-sm text-blue-100">
+            <p className="text-sm text-indigo-100">
               Smart Finance Assistant
             </p>
 
@@ -31,22 +31,22 @@ function AIAssistant({
 
         </div>
 
-        {/* CONTENT */}
-        <div className="p-5 space-y-4 max-h-96 overflow-y-auto">
+        {/* CONTENT - Clean neutral background */}
+        <div className="bg-gradient-to-b from-slate-50 to-white p-5 space-y-4 max-h-96 overflow-y-auto">
 
           {insights.map((insight, index) => (
 
             <div
               key={index}
-              className="bg-slate-100 dark:bg-slate-800 p-4 rounded-2xl flex gap-3"
+              className="bg-white border border-slate-200/80 p-4 rounded-2xl flex gap-3 shadow-sm hover:shadow-md transition-shadow duration-200"
             >
 
               <Sparkles
                 size={18}
-                className="mt-1 text-blue-600"
+                className="mt-1 text-indigo-500 flex-shrink-0"
               />
 
-              <p className="text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed text-slate-700">
                 {insight}
               </p>
 
@@ -59,7 +59,7 @@ function AIAssistant({
       </div>
 
     </div>
-  );
+  );  
 }
 
 export default AIAssistant;
