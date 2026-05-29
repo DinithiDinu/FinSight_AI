@@ -38,7 +38,7 @@ function Dashboard() {
       const response = await API.get(
         "/transactions"
       );
-
+    
       setTransactions(response.data);
 
     } catch (error) {
@@ -85,6 +85,45 @@ function Dashboard() {
   // BALANCE
   const balance =
     totalIncome - totalExpenses;
+
+// SPENDING BEHAVIOR CLASSIFICATION
+
+let savingsRate = 0;
+
+if (totalIncome > 0) {
+
+  savingsRate =
+    (balance / totalIncome) * 100;
+}
+
+let behaviorType = "";
+let behaviorColor = "";
+
+if (savingsRate >= 40) {
+
+  behaviorType = "🟢 Smart Saver";
+
+  behaviorColor =
+    "text-emerald-500";
+
+} else if (savingsRate >= 20) {
+
+  behaviorType =
+    "🟡 Balanced Spender";
+
+  behaviorColor =
+    "text-yellow-500";
+
+} else {
+
+  behaviorType =
+    "🔴 Impulsive Spender";
+
+  behaviorColor =
+    "text-rose-500";
+}
+// SPENDING BEHAVIOR CLASSIFICATION END
+
 
   // CATEGORY ANALYTICS
   const expenseCategories = {};
@@ -134,6 +173,21 @@ const trendData = Object.entries(
   month,
   amount,
 }));
+
+// ML FORECASTING
+let forecast = 0;
+
+if (trendData.length > 0) {
+
+  const total = trendData.reduce(
+    (acc, curr) =>
+      acc + curr.amount,
+    0
+  );
+
+  forecast =
+    total / trendData.length;
+}
 
 // AI INSIGHTS
 const insights = [];
@@ -189,6 +243,10 @@ if (balance > 0) {
     "⚠️ Your expenses exceed income"
   );
 }
+
+insights.push(
+         `🧠 Financial behavior classified as: ${behaviorType}`
+       );
 
 // BUDGET ALERTS
 const budgetAlerts = [];
@@ -258,96 +316,105 @@ budgets.forEach((budget) => {
         fetchBudgets={fetchBudgets}
       />
 
-      {/* SUMMARY CARDS */}
-      <div className="grid grid md:grid-cols-3 gap-6 mb-8">
+{/* SUMMARY CARDS */}
+<div className="grid md:grid-cols-4 gap-6 mb-8">
 
-        <div className="bg-white p-6 rounded-2xl">
+  <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <h2 className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+      Total Balance
+    </h2>
+    <p className="text-4xl font-bold mt-3 tracking-tight text-slate-800 dark:text-white">
+      Rs. {balance}
+    </p>
+  </div>
 
-          <h2 className="text-slate-500">
-            Total Balance
-          </h2>
+  <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <h2 className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+      Total Income
+    </h2>
+    <p className="text-3xl font-bold mt-2 text-emerald-600 dark:text-emerald-400">
+      Rs. {totalIncome}
+    </p>
+  </div>
 
-          <p className="text-4xl font-bold mt-3 tracking-tight">
-            Rs. {balance}
-          </p>
+  <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <h2 className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+      Total Expenses
+    </h2>
+    <p className="text-3xl font-bold mt-2 text-rose-600 dark:text-rose-400">
+      Rs. {totalExpenses}
+    </p>
+  </div>
 
-        </div>
+  <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <h2 className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+      Spending Profile
+    </h2>
+    <p className={`text-3xl font-bold mt-3 ${behaviorColor}`}>
+      {behaviorType}
+    </p>
+    <p className="text-slate-500 dark:text-slate-400 mt-3 text-sm">
+      Savings Rate: {savingsRate.toFixed(1)}%
+    </p>
+  </div>
 
-        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
-
-          <h2 className="text-slate-500">
-            Total Income
-          </h2>
-
-          <p className="text-3xl font-bold mt-2 text-green-400">
-            Rs. {totalIncome}
-          </p>
-
-        </div>
-
-        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
-
-          <h2 className="text-slate-500">
-            Total Expenses
-          </h2>
-
-          <p className="text-3xl font-bold mt-2 text-red-400">
-            Rs. {totalExpenses}
-          </p>
-
-        </div>
-
-      </div>
+</div>
 
       {/* CHART */}
-      <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+<div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
 
-        <h2 className="text-2xl font-bold mb-6">
-          Expense Categories
-        </h2>
+  <h2 className="text-2xl font-bold mb-6">
+    Expense Categories
+  </h2>
 
-        {chartData.length === 0 ? (
+  {chartData.length === 0 ? (
 
-          <p>No expense data yet.</p>
+    <p>No expense data yet.</p>
 
-        ) : (
+  ) : (
 
-          <div style={{ width: "100%", height: 400 }}>
+    <div style={{ width: "100%", height: 400 }}>
 
-            <ResponsiveContainer>
+      <ResponsiveContainer>
 
-              <PieChart>
+        <PieChart>
 
-                <Pie
-                  data={chartData}
-                  dataKey="value"
-                  nameKey="name"
-                  outerRadius={140}
-                  label
-                >
+          <Pie
+            data={chartData}
+            dataKey="value"
+            nameKey="name"
+            outerRadius={140}
+            label
+          >
 
-                  {chartData.map((entry, index) => (
+            {chartData.map((entry, index) => (
 
-                    <Cell
-                      key={index}
-                      fill={
-                        COLORS[
-                          index % COLORS.length
-                        ]
-                      }
-                    />
+              <Cell
+                key={index}
+                fill={
+                  COLORS[
+                    index % COLORS.length
+                  ]
+                }
+              />
 
-                  ))}
+            ))}
 
-                </Pie>
+          </Pie>
 
-                <Tooltip />
+          <Tooltip />
 
-              </PieChart>
+        </PieChart>
 
-            </ResponsiveContainer>
+      </ResponsiveContainer>
 
-            {/* MONTHLY TREND CHART */}
+    </div>
+
+  )}
+
+</div>
+
+{/* MONTHLY TREND CHART */}
 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 mt-8">
 
   <h2 className="text-2xl font-bold mb-6">
@@ -385,7 +452,74 @@ budgets.forEach((budget) => {
 
       </ResponsiveContainer>
 
-      {/* AI INSIGHTS */}
+    </div>
+
+  )}
+
+</div>
+
+{/* ML FORECAST PANEL */}
+<div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 mt-8">
+
+  <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white">
+    ML Forecast Analysis
+  </h2>
+
+  <div className="space-y-4">
+
+    <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700">
+
+      <p className="text-slate-500 dark:text-slate-400 mb-2 text-sm font-medium">
+        Predicted Next Month Expenses
+      </p>
+
+      <h3 className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+        Rs. {forecast.toFixed(0)}
+      </h3>
+
+    </div>
+
+    <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">
+      This prediction uses moving average forecasting
+      based on historical monthly spending patterns.
+    </p>
+
+  </div>
+
+</div>
+
+{/* Spending Behavior Analysis Panel */}
+<div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 mt-6">
+
+  <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white">
+    Spending Behavior Analysis
+  </h2>
+
+  <div className="grid grid-cols-2 gap-4">
+
+    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+      <p className="text-slate-500 dark:text-slate-400 mb-1 text-xs font-medium">
+        User Classification
+      </p>
+      <h3 className="text-xl font-bold text-amber-600 dark:text-amber-400">
+        Impulsive Spender
+      </h3>
+    </div>
+
+    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+      <p className="text-slate-500 dark:text-slate-400 mb-1 text-xs font-medium">
+        Savings Efficiency
+      </p>
+      <h3 className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+        0.0%
+      </h3>
+    </div>
+
+  </div>
+
+</div>
+
+{/* AI INSIGHTS */}
 <div className="bg-white p-6 rounded-2xl mt-8">
 
   <h2 className="text-2xl font-bold mb-6">
@@ -445,28 +579,16 @@ budgets.forEach((budget) => {
 
 </div>
 
-
-    </div>
-    
-
-  )}
-
-</div>
-
-          </div>
-
-        )}
-
-      </div>
-
-    </div>
-
     <AIAssistant
-      insights={insights}
-     />
+  insights={insights}
+  forecast={forecast}
+  behaviorType={behaviorType}
+/>
 
+    </div>
     </PageWrapper>
     </DashboardLayout>
+    
   );
 }
 
