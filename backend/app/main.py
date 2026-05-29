@@ -13,6 +13,10 @@ from app.routes.budget_routes import (
     router as budget_router
 )
 
+from app.routes.ml_routes import (
+    router as ml_router
+)
+
 app = FastAPI()
 
 # ALLOW FRONTEND
@@ -45,6 +49,12 @@ app.include_router(
     budget_router,
     prefix="/budgets",
     tags=["Budgets"]
+)
+
+app.include_router(
+    ml_router,
+    prefix="/ml",
+    tags=["Machine Learning"]
 )
 
 @app.get("/")

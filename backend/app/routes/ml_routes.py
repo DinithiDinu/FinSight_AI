@@ -1,0 +1,64 @@
+from fastapi import (
+    APIRouter,
+    Depends
+)
+
+from sqlalchemy.orm import Session
+
+from app.database.session import (
+    SessionLocal
+)
+
+from app.models.transaction import (
+    Transaction
+)
+
+from app.models.user import User
+
+from app.auth.dependencies import (
+    get_current_user
+)
+
+from app.services.ml_forecasting import (
+    forecast_expenses
+)
+
+router = APIRouter()
+
+
+def get_db():
+
+    db = SessionLocal()
+
+    try:
+        yield db
+
+    finally:
+        db.close()
+
+
+@router.get("/forecast")
+def get_forecast(
+    current_user: str = Depends(
+        get_current_user
+    ),
+    db: Session = Depends(get_db)
+):
+
+    user = db.query(User).filter(
+        User.email == current_user
+    ).first()
+
+    transactions = db.query(
+        Transaction
+    ).filter(
+        Transaction.user_id == user.id
+    ).all()
+
+    prediction = forecast_expenses(
+        transactions
+    )
+
+    return {
+        "forecast": prediction
+    }
