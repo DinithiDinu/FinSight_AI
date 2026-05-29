@@ -10,6 +10,8 @@ import PageWrapper from "../components/PageWrapper";
 
 import AIAssistant from "../components/AIAssistant";
 
+import ExportCSVButton from "../components/ExportCSVButton";
+
 import { 
   PieChart,
   Pie,
@@ -309,6 +311,14 @@ budgets.forEach((budget) => {
   <p className="text-slate-500 mt-2 text-lg">
     Smart personal finance analytics
   </p>
+
+  <div className="mt-6">
+
+  <ExportCSVButton
+    transactions={transactions}
+  />
+
+</div>
 
 </div>
 
