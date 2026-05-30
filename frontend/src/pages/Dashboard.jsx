@@ -31,6 +31,9 @@ function Dashboard() {
   const [transactions, setTransactions] =
     useState([]);
 
+    const [mlForecast, setMlForecast] =
+    useState(0);
+
   const [budgets, setBudgets] =
     useState([]);
 
@@ -49,6 +52,25 @@ function Dashboard() {
       console.error(error);
     }
   };
+
+  const fetchForecast = async () => {
+
+  try {
+
+    const response =
+      await API.get(
+        "/ml/forecast"
+      );
+
+    setMlForecast(
+      response.data.forecast
+    );
+
+  } catch (error) {
+
+    console.error(error);
+  }
+};
 
   const fetchBudgets = async () => {
 
@@ -72,6 +94,12 @@ function Dashboard() {
     fetchBudgets();
 
   }, []);
+
+  useEffect(() => {
+    if (transactions.length > 0) { 
+        fetchForecast();
+    }
+}, [transactions]);
 
   // TOTAL INCOME
   const totalIncome = transactions
@@ -176,21 +204,6 @@ const trendData = Object.entries(
   month,
   amount,
 }));
-
-// ML FORECASTING
-let forecast = 0;
-
-if (trendData.length > 0) {
-
-  const total = trendData.reduce(
-    (acc, curr) =>
-      acc + curr.amount,
-    0
-  );
-
-  forecast =
-    total / trendData.length;
-}
 
 // AI INSIGHTS
 const insights = [];
