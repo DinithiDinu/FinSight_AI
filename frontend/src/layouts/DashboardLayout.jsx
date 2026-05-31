@@ -1,18 +1,20 @@
 import Sidebar from "../components/Sidebar";
 
 function DashboardLayout({ children }) {
-
   return (
-    <div className="flex bg-slate-100">
+    <div className="flex min-h-screen bg-slate-100 dark:bg-slate-950">
+      <Sidebar />
 
-       <Sidebar />
-
-      <main className="flex-1 p-8">
-
+      <main
+        className="
+          flex-1
+          p-4
+          md:p-8
+          overflow-x-hidden
+        "
+      >
         {children}
-
       </main>
-
     </div>
   );
 }
