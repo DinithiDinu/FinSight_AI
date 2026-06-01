@@ -29,6 +29,7 @@ import {
 } from "recharts";
 
 function Dashboard() {
+  
 
   const [transactions, setTransactions] =
     useState([]);
@@ -114,6 +115,11 @@ function Dashboard() {
     .filter((t) => t.type === "expense")
     .reduce((acc, curr) =>
       acc + curr.amount, 0);
+
+    
+<FinanceChat
+  transactions={transactions}
+/>
 
   // BALANCE
   const balance =
@@ -266,9 +272,7 @@ insights.push(
          `🧠 Financial behavior classified as: ${behaviorType}`
        );
 
-       <FinanceChat
-  transactions={transactions}
-/>
+       
 
 // BUDGET ALERTS
 const budgetAlerts = [];
@@ -308,6 +312,8 @@ budgets.forEach((budget) => {
     );
   }
 });
+
+
 
   const COLORS = [
     "#3B82F6",
