@@ -13,6 +13,8 @@ import AIAssistant from "../components/AIAssistant";
 import ExportCSVButton from "../components/ExportCSVButton";
 import ImportCSV from "../components/ImportCSV";
 
+import FinanceChat from "../components/FinanceChat";
+
 import { 
   PieChart,
   Pie,
@@ -263,6 +265,10 @@ if (balance > 0) {
 insights.push(
          `🧠 Financial behavior classified as: ${behaviorType}`
        );
+
+       <FinanceChat
+  transactions={transactions}
+/>
 
 // BUDGET ALERTS
 const budgetAlerts = [];
