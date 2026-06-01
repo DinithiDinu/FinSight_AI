@@ -17,6 +17,10 @@ from app.routes.ml_routes import (
     router as ml_router
 )
 
+from app.routes.anomaly_routes import (
+    router as anomaly_router
+)
+
 app = FastAPI()
 
 # ALLOW FRONTEND
@@ -55,6 +59,12 @@ app.include_router(
     ml_router,
     prefix="/ml",
     tags=["Machine Learning"]
+)
+
+app.include_router(
+    anomaly_router,
+    prefix="/anomalies",
+    tags=["Anomaly Detection"]
 )
 
 @app.get("/")
